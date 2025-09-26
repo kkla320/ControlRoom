@@ -17,6 +17,7 @@ struct TogglesFormView: View {
             Toggle("Show booted devices first", isOn: $preferences.showBootedDevicesFirst)
             Toggle("Show icon in menu bar", isOn: $preferences.wantsMenuBarIcon)
         }
+        .formStyle(.grouped)
     }
 }
 

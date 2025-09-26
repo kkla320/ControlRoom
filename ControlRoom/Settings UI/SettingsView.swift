@@ -12,40 +12,25 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         TabView {
-            TogglesFormView()
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Window", systemImage: "macwindow")
-                }
+            Tab("Window", systemImage: "macwindow") {
+                TogglesFormView()
+            }
 
-            NotificationsFormView()
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Shortcuts", systemImage: "keyboard")
-                }
+            Tab("Shortcuts", systemImage: "keyboard") {
+                NotificationsFormView()
+            }
 
-            PickersFormView()
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Screenshots", systemImage: "camera.on.rectangle")
-                }
+            Tab("Screenshots", systemImage: "camera.on.rectangle") {
+                PickersFormView()
+            }
 
-            ColorPickerView()
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Colors", systemImage: "paintpalette")
-                }
+            Tab("Colors", systemImage: "paintpalette") {
+                ColorPickerView()
+            }
 
-            PathToTerminalTextFieldView()
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .tabItem {
-                    Label("Locations", systemImage: "externaldrive")
-                }
+            Tab("Locations", systemImage: "externaldrive") {
+                PathToTerminalTextFieldView()
+            }
         }
         .frame(minWidth: 550)
     }

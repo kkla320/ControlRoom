@@ -133,9 +133,6 @@ struct ColorsView: View {
                 .padding(.top, 20)
         }
         .padding()
-        .tabItem {
-            Text("Colors")
-        }
     }
 
     /// Updates the top area picked color to match a historical picked color

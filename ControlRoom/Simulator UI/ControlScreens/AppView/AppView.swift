@@ -142,9 +142,6 @@ struct AppView: View {
             }
             .padding()
         }
-        .tabItem {
-            Text("App")
-        }
         .alert(isPresented: $shouldShowUninstallConfirmationAlert) {
             Alert(title: Text("Are you sure you want to permanently delete \(selectedApplication.displayName)"),
                   message: Text("You can’t undo this action."),

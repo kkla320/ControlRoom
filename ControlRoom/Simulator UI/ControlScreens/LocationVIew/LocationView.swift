@@ -44,8 +44,16 @@ struct LocationView: View {
     @State private var longitudeText = "\(DEFAULT_LNG)"
     /// The location that is being simulated
     @State private var currentLocation = Location(id: UUID(), name: "", latitude: DEFAULT_LAT, longitude: DEFAULT_LNG)
+    @State private var mapPosition: MapCameraPosition = .region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: DEFAULT_LAT, longitude: DEFAULT_LNG),
+            span: MKCoordinateSpan(latitudeDelta: 15, longitudeDelta: 15)
+        )
+    )
     @State private var pinnedLocation: CLLocationCoordinate2D?
-
+    
+    @State private var showInspector: Bool = true
+    
     /// A randomly generated location offset from the currentLocation.
     /// Non-nil only when jittering is enabled.
     @State private var jitteredLocation: CLLocationCoordinate2D?
@@ -68,112 +76,153 @@ struct LocationView: View {
     }
 
     var body: some View {
-        Form {
-            VStack {
-                Text("Move the map, paste in coordinates or search for a location, then click Activate to update the simulator to match your centered coordinate.")
-
-                GeometryReader { proxy in
-                    HStack {
-                        ZStack(alignment: .topLeading) {
-                            VStack {
-                                SearchField(placeholder, text: $query, onClear: { onSearchClear() })
-                                    .onReceive(query.publisher) { _ in
-                                        performLocalSearch()
-                                    }
-                                ZStack {
-                                    Map(coordinateRegion: $currentLocation.region, annotationItems: annotations) { location in
-                                        MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), tint: .red)
-                                    }
-                                    .cornerRadius(5)
-
-                                    Circle()
-                                        .stroke(Color.blue, lineWidth: 4)
-                                        .frame(width: 20)
-                                }
-                            }
-                            VStack(spacing: 0) {
-                                VStack(alignment: .leading, spacing: 0) {
-                                    ForEach(results) { result in
-                                        LocalSearchRowView(lastHoverId: $lastHoverId, result: result, onTap: {
-                                            selectResult(result)
-                                        })
-                                        .onHover { isHovered in
-                                            if isHovered {
-                                                lastHoverId = result.id
-                                            } else if lastHoverId == result.id {
-                                                lastHoverId = nil
-                                            }
-                                        }
-                                    }
-
-                                    if results.isEmpty {
-                                        Text("No suggestions found")
-                                            .frame(maxWidth: .infinity)
-                                            .foregroundColor(.secondary)
-                                            .padding(.vertical, 8)
-                                    }
-                                }
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 10)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .background(.background)
-                            .padding(.top, 24)
-                            .cornerRadius(12)
-                            .opacity(presentResults ? 1 : 0)
-                        }
-
-                        .keyboardShortcut(.defaultAction)
-
-                        Table(of: Location.self, selection: $previouslyPickedLocation.onChange(updatePickedLocation)) {
-                            TableColumn("Saved locations", value: \.name)
-                        } rows: {
-                            ForEach(locationsController.locations) { location in
-                                TableRow(location)
-                                    .contextMenu {
-                                        Button("Delete") {
-                                            locationsController.delete(location.id)
-                                        }
-                                    }
-                            }
-                        }
-                        .cornerRadius(5)
-                        .frame(width: proxy.size.width * 0.3)
-                    }
-                }
-                .padding(.bottom, 10)
-
-                HStack {
-                    Text("Coordinates: \(locationText)")
-                        .textSelection(.enabled)
-                    Button("Copy", action: copyCoordinatesToClipboard)
-                    Spacer()
-                    Toggle("Jitter location", isOn: $isJittering)
-                        .toggleStyle(.checkbox)
-                    Button("Activate", action: changeLocation)
-                    Button("Save") {
-                        isShowingNewLocationAlert.toggle()
-                    }
+        Map(position: $mapPosition) {
+            ForEach(annotations) { annotation in
+                Marker(coordinate: annotation) {
+                    Text("Location")
                 }
             }
         }
-        .tabItem {
-            Text("Location")
-        }
-        .padding()
-        .onReceive(jitterTimer) { _ in
-            guard isJittering else {
-                jitteredLocation = nil
-                return
+        .inspector(isPresented: $showInspector) {
+            TabView {
+                Tab("Information", systemImage: "info.circle") {
+                    Form {
+                        Toggle(isOn: .constant(true)) {
+                            Text("Jitter")
+                        }
+                    }
+                    .formStyle(.grouped)
+                }
+                
+                Tab("Saved", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90") {
+                    List(selection: $previouslyPickedLocation) {
+                        ForEach(locationsController.locations) { location in
+                            Text("\(location.name)")
+                                .contextMenu {
+                                    Button("Delete") {
+                                        locationsController.delete(location.id)
+                                    }
+                                }
+                                .tag(location.id)
+                        }
+                    }
+                }
             }
-
-            jitterLocation()
+            .tabViewStyle(.grouped)
         }
-        .alert("Save location", isPresented: $isShowingNewLocationAlert) {
-            TextField("Name", text: $newLocationName)
-            Button("Save", action: savePickedLocation)
-            Button("Cancel", role: .cancel) { }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Toggle(
+                    "Inspector",
+                    systemImage: "sidebar.trailing",
+                    isOn: $showInspector
+                )
+            }
         }
+        .onChange(of: previouslyPickedLocation, updatePickedLocation)
+//        Form {
+//            VStack {
+//                Text("Move the map, paste in coordinates or search for a location, then click Activate to update the simulator to match your centered coordinate.")
+//
+//                GeometryReader { proxy in
+//                    HStack {
+//                        ZStack(alignment: .topLeading) {
+//                            VStack {
+//                                SearchField(placeholder, text: $query, onClear: { onSearchClear() })
+//                                    .onReceive(query.publisher) { _ in
+//                                        performLocalSearch()
+//                                    }
+//                                ZStack {
+////                                    Map(coordinateRegion: $currentLocation.region, annotationItems: annotations) { location in
+////                                        MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), tint: .red)
+////                                    }
+////                                    .cornerRadius(5)
+//
+//                                    Circle()
+//                                        .stroke(Color.blue, lineWidth: 4)
+//                                        .frame(width: 20)
+//                                }
+//                            }
+//                            VStack(spacing: 0) {
+//                                VStack(alignment: .leading, spacing: 0) {
+//                                    ForEach(results) { result in
+//                                        LocalSearchRowView(lastHoverId: $lastHoverId, result: result, onTap: {
+//                                            selectResult(result)
+//                                        })
+//                                        .onHover { isHovered in
+//                                            if isHovered {
+//                                                lastHoverId = result.id
+//                                            } else if lastHoverId == result.id {
+//                                                lastHoverId = nil
+//                                            }
+//                                        }
+//                                    }
+//
+//                                    if results.isEmpty {
+//                                        Text("No suggestions found")
+//                                            .frame(maxWidth: .infinity)
+//                                            .foregroundColor(.secondary)
+//                                            .padding(.vertical, 8)
+//                                    }
+//                                }
+//                                .padding(.horizontal, 10)
+//                                .padding(.vertical, 10)
+//                            }
+//                            .frame(maxWidth: .infinity)
+//                            .background(.background)
+//                            .padding(.top, 24)
+//                            .cornerRadius(12)
+//                            .opacity(presentResults ? 1 : 0)
+//                        }
+//
+//                        .keyboardShortcut(.defaultAction)
+//
+//                        Table(of: Location.self, selection: $previouslyPickedLocation.onChange(updatePickedLocation)) {
+//                            TableColumn("Saved locations", value: \.name)
+//                        } rows: {
+//                            ForEach(locationsController.locations) { location in
+//                                TableRow(location)
+//                                    .contextMenu {
+//                                        Button("Delete") {
+//                                            locationsController.delete(location.id)
+//                                        }
+//                                    }
+//                            }
+//                        }
+//                        .cornerRadius(5)
+//                        .frame(width: proxy.size.width * 0.3)
+//                    }
+//                }
+//                .padding(.bottom, 10)
+//
+//                HStack {
+//                    Text("Coordinates: \(locationText)")
+//                        .textSelection(.enabled)
+//                    Button("Copy", action: copyCoordinatesToClipboard)
+//                    Spacer()
+//                    Toggle("Jitter location", isOn: $isJittering)
+//                        .toggleStyle(.checkbox)
+//                    Button("Activate", action: changeLocation)
+//                    Button("Save") {
+//                        isShowingNewLocationAlert.toggle()
+//                    }
+//                }
+//            }
+//        }
+//        .padding()
+//        .onReceive(jitterTimer) { _ in
+//            guard isJittering else {
+//                jitteredLocation = nil
+//                return
+//            }
+//
+//            jitterLocation()
+//        }
+//        .alert("Save location", isPresented: $isShowingNewLocationAlert) {
+//            TextField("Name", text: $newLocationName)
+//            Button("Save", action: savePickedLocation)
+//            Button("Cancel", role: .cancel) { }
+//        }
     }
 
     /// Updates the simulated location to the value of `currentLocation`.
@@ -246,7 +295,14 @@ struct LocationView: View {
 
     /// Updates current location on the map when saved location is selected from the table.
     private func updatePickedLocation() {
-        guard let location = locationsController.item(with: previouslyPickedLocation) else { return }
-        currentLocation = location
+        guard let location = locationsController.item(with: previouslyPickedLocation) else {
+            return
+        }
+        mapPosition = .region(
+            MKCoordinateRegion(
+                center: location.center,
+                span: MKCoordinateSpan(latitudeDelta: 15, longitudeDelta: 15)
+            )
+        )
     }
 }

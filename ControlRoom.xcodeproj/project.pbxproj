@@ -70,7 +70,6 @@
 		555A145C23F70CCF00313BC5 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A145B23F70CCF00313BC5 /* Process.swift */; };
 		55AF68B523F9CFD600C5D87A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF68B423F9CFD600C5D87A /* SettingsView.swift */; };
 		55AF68B723F9D2E200C5D87A /* UIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF68B623F9D2E200C5D87A /* UIState.swift */; };
-		55AF68B923F9D32100C5D87A /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF68B823F9D32100C5D87A /* MainWindowController.swift */; };
 		55DF68B723F856E100E717D3 /* SimulatorActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DF68B623F856E100E717D3 /* SimulatorActionSheet.swift */; };
 		55DF68B923F86C0700E717D3 /* ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DF68B823F86C0700E717D3 /* ContextMenu.swift */; };
 		55DF68BB23F8BE8D00E717D3 /* CreateSimulatorActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DF68BA23F8BE8D00E717D3 /* CreateSimulatorActionSheet.swift */; };
@@ -174,7 +173,6 @@
 		555A145B23F70CCF00313BC5 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		55AF68B423F9CFD600C5D87A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		55AF68B623F9D2E200C5D87A /* UIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIState.swift; sourceTree = "<group>"; };
-		55AF68B823F9D32100C5D87A /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		55DF68B623F856E100E717D3 /* SimulatorActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorActionSheet.swift; sourceTree = "<group>"; };
 		55DF68B823F86C0700E717D3 /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
 		55DF68BA23F8BE8D00E717D3 /* CreateSimulatorActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSimulatorActionSheet.swift; sourceTree = "<group>"; };
@@ -401,7 +399,6 @@
 		555A145F23F758DE00313BC5 /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
-				55AF68B823F9D32100C5D87A /* MainWindowController.swift */,
 				511BA57E23F3FFEA00E3E660 /* MainView.swift */,
 				551F8CEE23F48B030006D1BD /* SplitLayoutView.swift */,
 				551F8CEC23F489A50006D1BD /* SidebarView.swift */,
@@ -715,7 +712,6 @@
 				5179289A25C37D2A000F6F3A /* KeyboardShortcuts.swift in Sources */,
 				51DCEFB42A0BC6B600561C9B /* CaptureController.swift in Sources */,
 				55DF68B923F86C0700E717D3 /* ContextMenu.swift in Sources */,
-				55AF68B923F9D32100C5D87A /* MainWindowController.swift in Sources */,
 				555A145C23F70CCF00313BC5 /* Process.swift in Sources */,
 				55DF68B723F856E100E717D3 /* SimulatorActionSheet.swift in Sources */,
 				ACD206572432272500F8659B /* XcodeCommandLineToolsController.swift in Sources */,
@@ -900,7 +896,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ControlRoom/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WFE8H575L7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -912,7 +908,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackingwithswift.ControlRoom;
 				PRODUCT_NAME = "Control Room";
@@ -935,7 +931,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ControlRoom/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WFE8H575L7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -947,7 +943,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackingwithswift.ControlRoom;

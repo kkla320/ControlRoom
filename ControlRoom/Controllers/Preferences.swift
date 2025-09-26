@@ -14,6 +14,8 @@ final class Preferences: ObservableObject {
     /// For parts of the app that want to observe a particular value directly,
     /// they need a way to be notified AFTER the value has changed.
     let objectDidChange = PassthroughSubject<Void, Never>()
+    
+    static let defaultTerminalPath = "/System/Applications/Utilities/Terminal.app"
 
     @AppStorage("CRWantsMenuBarIcon") var wantsMenuBarIcon = true
     @AppStorage("CRWantsFloatingWindow") var wantsFloatingWindow = false
@@ -23,4 +25,8 @@ final class Preferences: ObservableObject {
     @AppStorage("CRSidebar_ShowOnlyActiveDevices") var shouldShowOnlyActiveDevices = false
 
     @AppStorage("CRTerminalAppPath") var terminalAppPath = "/System/Applications/Utilities/Terminal.app"
+    
+    func setDefaultTerminalAppPath() {
+        terminalAppPath = Self.defaultTerminalPath
+    }
 }

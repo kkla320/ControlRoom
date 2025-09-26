@@ -61,6 +61,7 @@ struct ControlRoomApp: App {
 
         Settings {
             SettingsView()
+                .navigationTitle("Settings")
                 .environmentObject(preferences)
         }
 

@@ -82,9 +82,6 @@ struct SnapshotsView: View {
                 .font(.title)
 			}
 		}
-        .tabItem {
-            Text("Snapshots")
-        }
         .sheet(item: $snapshotAction) { action in
             switch action {
             case .rename:

@@ -16,12 +16,17 @@ struct NotificationsFormView: View {
             makeKeyboardShortcut(title: "Restart last selected app", for: .restartLastSelectedApp)
             makeKeyboardShortcut(title: "Reopen last URL", for: .reopenLastURL)
         }
+        .formStyle(.grouped)
     }
 
-    private func makeKeyboardShortcut(title: String, for name: KeyboardShortcuts.Name) -> some View {
-        HStack {
-            Text(title)
+    private func makeKeyboardShortcut(
+        title: String,
+        for name: KeyboardShortcuts.Name
+    ) -> some View {
+        LabeledContent {
             KeyboardShortcuts.Recorder(for: name)
+        } label: {
+            Text(title)
         }
     }
 }

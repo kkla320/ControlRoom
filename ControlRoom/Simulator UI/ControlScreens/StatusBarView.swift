@@ -12,6 +12,8 @@ import SwiftUI
 struct StatusBarView: View {
     let simulator: Simulator
 
+    @Environment(\.calendar) private var calendar
+    
     /// The current time to show in the device.
     @State private var time = Date.now
 
@@ -33,7 +35,7 @@ struct StatusBarView: View {
     @AppStorage("CRNetwork_CarrierName") private var carrierName = "Carrier"
 
     /// The current battery level of the device, as a value from 0 through 100
-    @State private var batteryLevel = 100.0
+    @State private var batteryLevel = 1.0
 
     /// The current battery state of the device; must be "Charging", "Charged", or "Discharging"
     /// Note: "Charged" looks the same as "Discharging", so it's not included in this screen.
@@ -44,94 +46,100 @@ struct StatusBarView: View {
             Form {
                 Section {
                     HStack {
-                        DatePicker("Time:", selection: $time)
-                        Button("Set", action: setTime)
                         Button("Set to 9:41", action: setAppleTime)
                         Spacer()
-                        Button("Clear overrides", action: clearOverrides)
+                        DatePicker("Time", selection: $time)
+                            .labelsHidden()
                     }
+                    .onChange(of: time, setTime)
+
+                    Button("Clear overrides", action: clearOverrides)
+                } header: {
+                    Text("Time")
                 }
 
-                Spacer()
-                    .frame(height: 40)
-
                 Section {
-                    TextField("Operator", text: $carrierName, onCommit: updateCellularData)
-
-                    Picker("Network type:", selection: $dataNetwork.onChange(updateWiFiData)) {
+                    TextField("Operator", text: $carrierName)
+                        .onSubmit {
+                            updateCellularData()
+                        }
+                    
+                    Picker("Network type", selection: $dataNetwork) {
                         ForEach(SimCtl.StatusBar.DataNetwork.allCases, id: \.self) { network in
                             Text(network.displayName)
                         }
                     }
                     .pickerStyle(.menu)
-
-                    Divider()
-
-                    Picker("Wi-Fi mode:", selection: $wiFiMode.onChange(updateWiFiData)) {
+                    .onChange(of: dataNetwork, updateWiFiData)
+                } header: {
+                    Text("Network")
+                }
+                
+                Section {
+                    Picker("Mode", selection: $wiFiMode) {
                         ForEach(SimCtl.StatusBar.WifiMode.allCases, id: \.self) { mode in
                             Text(mode.displayName)
                         }
                     }
                     .pickerStyle(.menu)
-
-                    Picker("Wi-Fi bars:", selection: $wiFiBar.onChange(updateWiFiData)) {
+                    .onChange(of: wiFiMode, updateWiFiData)
+                    
+                    Picker("Bars", selection: $wiFiBar) {
                         ForEach(SimCtl.StatusBar.WifiBars.allCases, id: \.self) { bars in
                             Image(systemName: "wifi", variableValue: bars.symbolVariable)
                                 .tag(bars.rawValue)
                         }
                     }
                     .pickerStyle(.segmented)
-
-                    Divider()
-
-                    Picker("Cellular mode:", selection: $cellularMode.onChange(updateCellularData)) {
+                    .onChange(of: wiFiBar, updateWiFiData)
+                } header: {
+                    Text("Wi-Fi")
+                }
+                
+                Section {
+                    Picker("Mode", selection: $cellularMode) {
                         ForEach(SimCtl.StatusBar.CellularMode.allCases, id: \.self) { mode in
                             Text(mode.displayName)
                         }
                     }
                     .pickerStyle(.menu)
+                    .onChange(of: cellularMode, updateCellularData)
 
-                    Picker("Cellular bars:", selection: $cellularBar.onChange(updateCellularData)) {
+                    Picker("Bars", selection: $cellularBar) {
                         ForEach(SimCtl.StatusBar.CellularBars.allCases, id: \.self) { bars in
                             Image(systemName: "cellularbars", variableValue: bars.symbolVariable)
                                 .tag(bars.rawValue)
                         }
                     }
                     .pickerStyle(.segmented)
+                    .onChange(of: cellularBar, updateCellularData)
+                } header: {
+                    Text("Cellular")
                 }
-
-                Spacer()
-                    .frame(height: 40)
-
+                
                 Section {
-                    Picker("Battery state:", selection: $batteryState.onChange(updateBattery)) {
+                    Picker("State", selection: $batteryState) {
                         ForEach(SimCtl.StatusBar.BatteryState.allCases, id: \.self) { state in
                             Text(state.displayName)
                         }
                     }
-                    .pickerStyle(.radioGroup)
+                    .onChange(of: batteryState, updateBattery)
 
-                    VStack(spacing: 0) {
-						Text("Current battery percentage: \(Int(round(batteryLevel)))%")
-							.font(.callout.monospacedDigit())
-
-						Slider(
-							value: $batteryLevel,
-							in: 0...100,
-							onEditingChanged: levelChanged,
-							minimumValueLabel: Text("0%"),
-							maximumValueLabel: Text("100%")
-						) {
-                            Text("Level:")
+                    LabeledContent {
+                        HStack {
+                            TextField("Level", value: $batteryLevel, format: .percent)
+                            Stepper("Level", value: $batteryLevel, in: 0...1, step: 0.01)
                         }
+                        .labelsHidden()
+                    } label: {
+                        Text("Level")
                     }
-                    .padding(.top, 5)
+                    .onChange(of: batteryLevel, updateBattery)
+                } header: {
+                    Text("Battery")
                 }
             }
-            .padding()
-        }
-        .tabItem {
-            Text("Status Bar")
+            .formStyle(.grouped)
         }
     }
 
@@ -143,14 +151,12 @@ struct StatusBarView: View {
     }
 
 	private func setAppleTime() {
-        let calendar = Calendar.current
         var components = calendar.dateComponents([.year, .month, .day], from: Date.now)
         components.hour = 9
         components.minute = 41
         components.second = 0
 
         let appleTime = calendar.date(from: components) ?? Date.now
-        SimCtl.overrideStatusBarTime(simulator.udid, time: appleTime)
 
         time = appleTime
     }
@@ -161,7 +167,7 @@ struct StatusBarView: View {
         wiFiBar = .three
         cellularMode = .active
         cellularBar = .four
-        batteryLevel = 100.0
+        batteryLevel = 1
         batteryState = .charged
         carrierName = "Carrier"
     }
@@ -190,26 +196,17 @@ struct StatusBarView: View {
     private func updateBattery() {
 		SimCtl.overrideStatusBarBattery(
 			simulator.udid,
-			level: Int(batteryLevel),
+			level: Int(batteryLevel * 100),
 			state: batteryState
 		)
-    }
-
-    /// Triggered when the user adjusts the battery level.
-    private func levelChanged(_ isEditing: Bool) {
-        if isEditing == false {
-            updateBattery()
-        }
     }
 }
 
 // MARK: Preview
 
-struct StatusBarViewView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusBarView(simulator: .example)
-            .environmentObject(Preferences())
-    }
+#Preview {
+    StatusBarView(simulator: .example)
+        .environmentObject(Preferences())
 }
 
 // MARK: Extensions

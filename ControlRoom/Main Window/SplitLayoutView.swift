@@ -28,10 +28,11 @@ struct SplitLayoutView: View {
 					Text("Select a simulator from the list.")
 						.frame(maxWidth: .infinity, maxHeight: .infinity)
 				case 1:
-					ControlView(controller: controller,
-								simulator: controller.selectedSimulators[0],
-								applications: controller.applications)
-						.padding()
+                    ControlView(
+                        controller: controller,
+                        simulator: controller.selectedSimulators[0],
+                        applications: controller.applications
+                    )
 				default:
 					Text("Drag file(s) here to copy them to each simulator's Files directory.\n(booted simulators only)")
 						.multilineTextAlignment(.center)

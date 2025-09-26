@@ -19,13 +19,13 @@ struct PickersFormView: View {
 
     var body: some View {
         Form {
-            Picker("Screenshot Format:", selection: $captureSettings.imageFormat) {
+            Picker("Screenshot Format", selection: $captureSettings.imageFormat) {
                 ForEach(SimCtl.IO.ImageFormat.allCases, id: \.self) { type in
                     Text(type.rawValue.uppercased()).tag(type)
                 }
             }
 
-            Picker("Video Format:", selection: $captureSettings.videoFormat) {
+            Picker("Video Format", selection: $captureSettings.videoFormat) {
                 ForEach(SimCtl.IO.VideoFormat.all, id: \.self) { item in
                     if item == .divider {
                         Divider()
@@ -35,22 +35,37 @@ struct PickersFormView: View {
                 }
             }
 
-            Picker("Display:", selection: $captureSettings.display) {
+            Picker("Display", selection: $captureSettings.display) {
                 ForEach(SimCtl.IO.Display.allCases, id: \.self) { display in
                     Text(display.rawValue.capitalized).tag(display)
                 }
             }
 
-            Picker("Mask:", selection: $captureSettings.mask) {
+            Picker("Mask", selection: $captureSettings.mask) {
                 ForEach(SimCtl.IO.Mask.allCases, id: \.self) { mask in
                     Text(mask.rawValue.capitalized).tag(mask)
                 }
             }
             .disabled(renderChrome)
 
-          Button("Save to: \(captureSettings.saveURL.rawValue)") {
-            showFileImporter = true
-          }
+            LabeledContent {
+                Button("\(captureSettings.saveURL.rawValue)") {
+                    showFileImporter = true
+                }
+            } label: {
+                Text("Destination")
+            }
+            .fileImporter(
+                isPresented: $showFileImporter,
+                allowedContentTypes: [.directory]
+            ) { result in
+                switch result {
+                case .success(let success):
+                    captureSettings.saveURL = .other(success)
+                case .failure:
+                    captureSettings.saveURL = .desktop
+                }
+            }
 
             Toggle(isOn: $renderChrome.onChange(updateChromeSettings)) {
                 VStack(alignment: .leading) {
@@ -60,14 +75,7 @@ struct PickersFormView: View {
                 }
             }
         }
-        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.directory]) { result in
-          switch result {
-          case .success(let success):
-            captureSettings.saveURL = .other(success)
-          case .failure:
-            captureSettings.saveURL = .desktop
-          }
-        }
+        .formStyle(.grouped)
     }
 
     private func updateChromeSettings() {

@@ -12,6 +12,7 @@
       }
     },
     "(Requires Reboot)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -68,6 +69,7 @@
       }
     },
     "0%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -78,6 +80,7 @@
       }
     },
     "100%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -108,6 +111,7 @@
       }
     },
     "Activate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -187,7 +191,11 @@
         }
       }
     },
+    "Appearance" : {
+
+    },
     "Appearance:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -287,7 +295,14 @@
         }
       }
     },
+    "Bars" : {
+
+    },
+    "Battery" : {
+
+    },
     "Battery state:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -357,7 +372,11 @@
         }
       }
     },
+    "Cellular" : {
+
+    },
     "Cellular bars:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -368,6 +387,7 @@
       }
     },
     "Cellular mode:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -488,6 +508,7 @@
       }
     },
     "Coordinates: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -568,6 +589,7 @@
       }
     },
     "Current battery percentage: %@%%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -578,6 +600,7 @@
       }
     },
     "Current battery percentage: %lld%%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -606,6 +629,12 @@
           }
         }
       }
+    },
+    "Decimal places" : {
+
+    },
+    "Decimal Places" : {
+
     },
     "Decimal Places: %lld" : {
       "localizations" : {
@@ -677,6 +706,9 @@
         }
       }
     },
+    "Destination" : {
+
+    },
     "Device" : {
       "localizations" : {
         "ar" : {
@@ -747,7 +779,11 @@
         }
       }
     },
+    "Display" : {
+
+    },
     "Display:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -977,7 +1013,17 @@
         }
       }
     },
+    "Information" : {
+
+    },
+    "Inspector" : {
+
+    },
+    "Jitter" : {
+
+    },
     "Jitter location" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -997,7 +1043,11 @@
         }
       }
     },
+    "Language" : {
+
+    },
     "Language:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1017,7 +1067,11 @@
         }
       }
     },
+    "Level" : {
+
+    },
     "Level:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1027,7 +1081,11 @@
         }
       }
     },
+    "Locale" : {
+
+    },
     "Locale:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1036,6 +1094,9 @@
           }
         }
       }
+    },
+    "Localization" : {
+
     },
     "Localized" : {
       "localizations" : {
@@ -1103,7 +1164,11 @@
         }
       }
     },
+    "Mask" : {
+
+    },
     "Mask:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1116,7 +1181,11 @@
     "Misc" : {
 
     },
+    "Mode" : {
+
+    },
     "Move the map, paste in coordinates or search for a location, then click Activate to update the simulator to match your centered coordinate." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1136,7 +1205,14 @@
         }
       }
     },
+    "Network" : {
+
+    },
+    "Network type" : {
+
+    },
     "Network type:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1177,6 +1253,7 @@
       }
     },
     "No suggestions found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1617,6 +1694,7 @@
       }
     },
     "Save location" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1627,6 +1705,7 @@
       }
     },
     "Save to: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1635,6 +1714,9 @@
           }
         }
       }
+    },
+    "Saved" : {
+
     },
     "Saved deep links" : {
       "localizations" : {
@@ -1667,6 +1749,7 @@
       }
     },
     "Saved locations" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1676,7 +1759,11 @@
         }
       }
     },
+    "Screenshot Format" : {
+
+    },
     "Screenshot Format:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1737,6 +1824,7 @@
       }
     },
     "Set" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1775,6 +1863,12 @@
           }
         }
       }
+    },
+    "Setting the language and locale requires a device reboot." : {
+
+    },
+    "Settings" : {
+
     },
     "Shortcuts" : {
       "localizations" : {
@@ -1896,7 +1990,11 @@
         }
       }
     },
+    "State" : {
+
+    },
     "Status Bar" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1905,6 +2003,9 @@
           }
         }
       }
+    },
+    "Statusbar" : {
+
     },
     "Stop Recording" : {
       "localizations" : {
@@ -1966,7 +2067,11 @@
         }
       }
     },
+    "Time" : {
+
+    },
     "Time:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2082,7 +2187,11 @@
         }
       }
     },
+    "Video Format" : {
+
+    },
     "Video Format:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2092,7 +2201,11 @@
         }
       }
     },
+    "Wi-Fi" : {
+
+    },
     "Wi-Fi bars:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2103,6 +2216,7 @@
       }
     },
     "Wi-Fi mode:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

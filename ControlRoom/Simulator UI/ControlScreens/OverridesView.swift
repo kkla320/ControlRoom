@@ -47,41 +47,31 @@ struct OverridesView: View {
     var body: some View {
         ScrollView {
             Form {
-                Group {
-                    Picker("Appearance:", selection: $appearance.onChange(updateAppearance)) {
-                        ForEach(SimCtl.UI.Appearance.allCases, id: \.self) {
-                            Text($0.displayName)
-                        }
+                Picker("Appearance", selection: $appearance.onChange(updateAppearance)) {
+                    ForEach(SimCtl.UI.Appearance.allCases, id: \.self) {
+                        Text($0.displayName)
                     }
                 }
-
-                Spacer()
-                    .frame(height: 40)
-
-                Group {
-                    Picker("Language:", selection: $language) {
+                
+                Section {
+                    Picker("Language", selection: $language) {
                         ForEach(languages, id: \.self) {
                             Text(NSLocale.current.localizedString(forLanguageCode: $0) ?? "")
                         }
                     }
-                    Picker("Locale:", selection: $locale) {
+                    Picker("Locale", selection: $locale) {
                         ForEach(locales(for: language), id: \.self) {
                             Text(NSLocale.current.localizedString(forIdentifier: $0) ?? "")
                         }
                     }
-                    HStack {
-                        Button("Set Language/Locale", action: updateLanguage)
-                        Text("(Requires Reboot)").font(.system(size: 11)).foregroundColor(.secondary)
-                    }
+                    Button("Set Language/Locale", action: updateLanguage)
+                } header: {
+                    Text("Localization")
+                } footer: {
+                    Text("Setting the language and locale requires a device reboot.")
                 }
 
-                Spacer()
-                    .frame(height: 40)
-
-                Section(header:
-                    Text("Accessibility overrides")
-                        .font(.headline)
-                ) {
+                Section {
                     Picker("Content size:", selection: $contentSize) {
                         ForEach(SimCtl.UI.ContentSizes.allCases, id: \.self) { size in
                             HStack {
@@ -89,28 +79,25 @@ struct OverridesView: View {
                             }
                         }
                     }
-                    .onChange(of: contentSize) { _ in
-                        updateContentSize()
-                    }
+                    .onChange(of: contentSize, updateContentSize)
 
-                    Toggle("Bold Text", isOn: $enhanceTextLegibility.onChange(setEnhanceTextLegibility))
-                    Toggle("Button Shapes", isOn: $showButtonShapes.onChange(setShowButtonShapes))
+                    Toggle("Bold Text", isOn: $enhanceTextLegibility)
+                        .onChange(of: enhanceTextLegibility, setEnhanceTextLegibility)
+                    Toggle("Button Shapes", isOn: $showButtonShapes)
+                        .onChange(of: showButtonShapes, setShowButtonShapes)
                     Toggle("On/Off Labels", isOn: $showOnOffLabels.onChange(setShowOnOffLabels))
                     Toggle("Reduce Transparency", isOn: $reduceTransparency.onChange(setReduceTransparency))
                     Toggle("Increase Contrast", isOn: $increaseContrast.onChange(setIncreaseContrast))
                     Toggle("Differentiate Without Color", isOn: $differentiateWithoutColor.onChange(setDifferentiateWithoutColor))
                     Toggle("Smart Invert", isOn: $smartInvert.onChange(setSmartInvert))
+                    Toggle("Reduce Motion", isOn: $reduceMotion.onChange(setReduceMotion))
+                    Toggle("Prefer Cross-Fade Transitions", isOn: $preferCrossFadeTransitions.onChange(setPreferCrossFadeTransitions))
+                        .disabled(reduceMotion == false)
+                } header: {
+                    Text("Accessibility overrides")
                 }
-
-                Toggle("Reduce Motion", isOn: $reduceMotion.onChange(setReduceMotion))
-
-                Toggle("Prefer Cross-Fade Transitions", isOn: $preferCrossFadeTransitions.onChange(setPreferCrossFadeTransitions))
-                    .disabled(reduceMotion == false)
             }
-            .padding()
-        }
-        .tabItem {
-            Text("Overrides")
+            .formStyle(.grouped)
         }
     }
 
@@ -191,9 +178,7 @@ struct OverridesView: View {
     }
 }
 
-struct OverridesView_Previews: PreviewProvider {
-    static var previews: some View {
-        OverridesView(simulator: .example)
-            .environmentObject(Preferences())
-    }
+#Preview {
+    OverridesView(simulator: .example)
+        .environmentObject(Preferences())
 }

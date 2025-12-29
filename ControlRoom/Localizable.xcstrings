@@ -111,7 +111,6 @@
       }
     },
     "Activate" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1013,13 +1012,7 @@
         }
       }
     },
-    "Information" : {
-
-    },
     "Inspector" : {
-
-    },
-    "Jitter" : {
 
     },
     "Jitter location" : {
@@ -1694,7 +1687,6 @@
       }
     },
     "Save location" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1714,9 +1706,6 @@
           }
         }
       }
-    },
-    "Saved" : {
-
     },
     "Saved deep links" : {
       "localizations" : {

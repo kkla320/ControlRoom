@@ -93,6 +93,7 @@
 		C9C203ED2B17FEA80081E1EF /* LocalSearchRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C203EC2B17FEA80081E1EF /* LocalSearchRowView.swift */; };
 		E04B47322B07B66F00DAE338 /* LocationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04B47312B07B66F00DAE338 /* LocationsController.swift */; };
 		E04B47342B07B72C00DAE338 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04B47332B07B72C00DAE338 /* Location.swift */; };
+		E848AA372F01837E00197F09 /* View+newLocationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E848AA362F01837A00197F09 /* View+newLocationAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 		C9C203EC2B17FEA80081E1EF /* LocalSearchRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchRowView.swift; sourceTree = "<group>"; };
 		E04B47312B07B66F00DAE338 /* LocationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsController.swift; sourceTree = "<group>"; };
 		E04B47332B07B72C00DAE338 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		E848AA362F01837A00197F09 /* View+newLocationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+newLocationAlert.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -490,6 +492,7 @@
 		C9C203EB2B17FE900081E1EF /* LocationVIew */ = {
 			isa = PBXGroup;
 			children = (
+				E848AA362F01837A00197F09 /* View+newLocationAlert.swift */,
 				70BE435923F54B7200FD6282 /* LocationView.swift */,
 				C9C203EC2B17FEA80081E1EF /* LocalSearchRowView.swift */,
 			);
@@ -706,6 +709,7 @@
 				551F8CF123F498C30006D1BD /* SimulatorsController.swift in Sources */,
 				ACCD798C240ADEE20004ECE5 /* NotificationEditorView.swift in Sources */,
 				41C44ACD2616FCB50016B1E4 /* FFMPEGConverter.swift in Sources */,
+				E848AA372F01837E00197F09 /* View+newLocationAlert.swift in Sources */,
 				5197324A2A0863B400B1F68C /* OverridesView.swift in Sources */,
 				70BE435A23F54B7200FD6282 /* LocationView.swift in Sources */,
 				ACD2064D2431F20000F8659B /* CommandLineExecuter.swift in Sources */,
@@ -908,7 +912,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackingwithswift.ControlRoom;
 				PRODUCT_NAME = "Control Room";
@@ -943,7 +947,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackingwithswift.ControlRoom;
